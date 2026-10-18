@@ -8,6 +8,7 @@ personal review, and an on-demand AI tutor.
 
 - **Full project context:** [docs/Punstem-AI-Context.txt](docs/Punstem-AI-Context.txt)
 - **AI contributor guide:** [CLAUDE.md](CLAUDE.md)
+- **Role boundaries and model policy:** [AGENTS.md](AGENTS.md)
 - Last-known published site: https://punstem.chang-5319.chatgpt.site/
 - Owner-requested additional link: https://colorgami.com (domain relationship
   to the published site has not been verified).
@@ -32,6 +33,7 @@ is `/study.html`; existing practice is `/math.html`, `/trainer.html`, and
 ```sh
 node scripts/test-study.mjs
 node scripts/test-study-api.mjs
+npm test
 npm run build
 ```
 
@@ -65,6 +67,17 @@ working, use a feature branch when coordinating, and review/merge changes
 before another tool starts from them. GitHub pushes do not automatically
 sync the separate Sites repository or publish production. Do not force-push
 or overwrite another contributor's work.
+
+Development roles: Sonnet 5.5 handles frontend; GPT-6.1 Sol handles backend
+and coordination; GPT-6 Luna handles routine QA. Astra is prohibited. See
+`AGENTS.md` for the actual file boundaries; these are written policies, not
+an automatically launched multi-agent system or enforced sandbox.
+
+`npm test` runs the existing deterministic test scripts plus new
+`tests/*.test.mjs` cases. Full-text source-retrieval tests are clearly skipped
+when the private corpus is absent. `npm run test:private` requires that corpus
+and fails early if it is unavailable. QA can write tests under `tests/` only;
+application fixes belong to frontend/backend owners.
 
 Keep `.env*`, local account/database state, dependencies, and build output
 out of Git. The source bank in `db/` is application content, not a production

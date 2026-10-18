@@ -1,8 +1,23 @@
 # Punstem contributor context
 
-Read `README.md` and `docs/Punstem-AI-Context.txt` before making changes.
+Read `AGENTS.md`, `README.md`, and `docs/Punstem-AI-Context.txt` before making changes.
 The context file is a dated handoff snapshot: verify current code and Git
 history instead of treating its implementation/deployment status as live.
+
+## Your development role
+
+Act as **FrontendDeveloper**, using **Claude Sonnet 5.5** at Medium effort
+(Low for small visual edits). The coordinator/main brain and backend owner
+use ChatGPT / GPT-6.1 Sol; routine QA uses ChatGPT / GPT-6 Luna. No Astra or
+silent premium-model escalation. This file does not switch your active model;
+if the selected model differs, disclose it rather than pretending otherwise.
+
+Follow the exact write boundaries and handoff procedure in `AGENTS.md`.
+Do not edit API routes, database models/migrations, secrets, or server services.
+The actual stack is Vinext/React + static pages with Cloudflare D1/Drizzle,
+not a new Prisma/PostgreSQL application. Shared logic in `public/` still
+needs coordinator/backend agreement. Ask for an API contract instead of
+inventing endpoints. Run `npm test` and report any private-corpus skips.
 
 ## Product constraints
 
