@@ -121,6 +121,36 @@ and never auto-merge a failure. Deployment is separate from a GitHub push.
 Preserve the Sites identity. Never commit full private textbooks, `.env`,
 credentials, student exports, or local databases to this public repository.
 
+## Active desktop coordination workflow
+
+For Punstem improvements requested in the coordinator's active chat, use this
+sequence: coordinator/backend -> Claude desktop frontend -> deterministic
+tests and GPT-6 Luna QA -> coordinator review/integration/push.
+
+- The owner has requested direct handoffs to their existing PUNSTEM frontend
+  conversation in Claude desktop. Use the enabled desktop-control tool, verify
+  the target conversation and empty composer, and identify the sender as the
+  ChatGPT coordinator. Do not impersonate the owner or overwrite their draft.
+- Send the base commit, allowed files, goal, acceptance criteria, API changes,
+  and concurrency boundaries. Parallel work is allowed only for disjoint
+  files and settled interfaces; otherwise complete backend work first.
+- Claude can clone/read the public repository but currently lacks push access.
+  Request a downloadable unified `.patch`, summary, and actual test results.
+  The coordinator retrieves and inspects that patch before applying it; do
+  not give Claude passwords, tokens, private corpus, or student exports.
+- A backend-only change may need no frontend edit. Still provide the interface
+  handoff when relevant, but do not invent cosmetic work to keep an agent busy.
+- After the frontend handoff completes, run deterministic checks and delegate
+  a bounded combined-diff review to GPT-6 Luna. QA may write under `tests/` only;
+  return production defects to the appropriate owner, then rerun affected checks.
+- Report blocked desktop access, interrupted user control, unavailable models,
+  missing artifacts, failed tests, and unverified visual checks. Never claim
+  a handoff, review, merge, or deployment occurred without evidence.
+- This is coordination while an authorized task is actively running, not a
+  background daemon, scheduler, or always-on connection between applications.
+  Do not operate another unrelated Claude conversation or continue an unlimited
+  unattended loop. Written instructions do not expand tool permissions.
+
 ## Cost controls
 
 - Run deterministic tests before asking another model to review obvious errors.

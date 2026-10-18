@@ -50,6 +50,16 @@ inventing endpoints. Run `npm test` and report any private-corpus skips.
 
 ## Collaboration and verification
 
+The owner requested direct handoffs from the ChatGPT coordinator into their
+PUNSTEM Claude desktop conversation while a task is actively running. Each
+handoff should name a GitHub base SHA, exact allowed files, acceptance criteria,
+API details, and concurrency boundaries. Return a downloadable unified `.patch`
+plus a concise summary and actual test report; ChatGPT reviews/applies/pushes
+it, then runs deterministic tests and GPT-6 Luna QA before final integration.
+If no frontend edit is needed, say so. Do not request GitHub credentials, secrets,
+student exports, or private source text to make the handoff work. This is not
+an always-on automated connection; disclose access/model/artifact blockers.
+
 - Pull current GitHub changes before starting. Do not force-push or discard
   uncommitted changes. Use feature branches for coordinated work.
 - Preserve `.openai/hosting.json` identity and existing bindings.
