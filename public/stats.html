@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Punstem — Usage</title>
+  <meta name="description" content="Punstem activity and practice statistics." />
+  <style>
+    :root{--blue:#246bfd;--ink:#17243a;--muted:#6b778a;--line:#e2e8f0;--paper:#fff;--bg:#f7f9fc;--soft:#eef4ff;--green:#159447;--orange:#e99028}
+    *{box-sizing:border-box}body{margin:0;color:var(--ink);background:linear-gradient(180deg,#fbfcfe,#f3f7fc);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.shell{width:min(1080px,calc(100% - 32px));margin:auto;padding:18px 0 56px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:11px 14px;margin-bottom:42px}.brand{display:flex;align-items:center;gap:10px;font-weight:900}.mark{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#e9f0ff;color:var(--blue);font-weight:950}.nav{display:flex;gap:8px}.nav a{border:1px solid #dce4ef;border-radius:999px;padding:8px 12px;color:#31527f;text-decoration:none;font-size:.82rem;font-weight:800}.hero{max-width:760px;margin-bottom:28px}.eyebrow{color:var(--blue);font-size:.76rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.hero h1{font:700 clamp(2.7rem,7vw,5.4rem)/.98 Georgia,"Times New Roman",serif;letter-spacing:-.055em;margin:18px 0 14px}.hero p{color:var(--muted);font-size:1rem;line-height:1.65;max-width:650px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}.card,.panel{background:var(--paper);border:1px solid var(--line);border-radius:18px}.card{padding:19px}.card small{display:block;color:var(--muted);font-weight:750}.card strong{display:block;font-size:1.75rem;margin-top:5px;letter-spacing:-.04em}.grid{display:grid;grid-template-columns:1.45fr .75fr;gap:14px}.panel{padding:22px;margin-bottom:14px}.panel h2{font-size:1rem;margin:0}.panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:20px}.panel-head span{color:var(--muted);font-size:.78rem}.chart{min-height:260px;display:flex;align-items:flex-end;gap:8px;border-bottom:1px solid var(--line);padding:18px 4px 0}.bar-wrap{flex:1;min-width:0;text-align:center}.bar{height:var(--h);min-height:3px;background:linear-gradient(180deg,#5e8fff,var(--blue));border-radius:8px 8px 2px 2px;position:relative}.bar:hover:after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);white-space:nowrap;background:#17243a;color:#fff;padding:6px 8px;border-radius:7px;font-size:.72rem;z-index:2}.bar-wrap small{display:block;color:#8390a3;font-size:.64rem;margin-top:7px;white-space:nowrap}.breakdown{display:grid;gap:13px;margin-top:18px}.meter-row{display:grid;grid-template-columns:88px 1fr auto;gap:10px;align-items:center;font-size:.82rem}.meter-row span:first-child{font-weight:800;text-transform:capitalize}.meter{height:8px;background:#edf1f6;border-radius:99px;overflow:hidden}.meter i{display:block;height:100%;width:var(--w);background:var(--blue);border-radius:99px}.meter-row b{color:var(--muted)}.learners{margin-top:10px}.learner{display:grid;grid-template-columns:1fr auto auto;gap:12px;padding:12px 2px;border-top:1px solid var(--line);align-items:center}.learner strong{overflow:hidden;text-overflow:ellipsis}.learner span,.learner time{font-size:.78rem;color:var(--muted)}.empty{color:var(--muted);padding:42px 0;text-align:center}.privacy{color:var(--muted);font-size:.76rem;line-height:1.6;margin:16px 4px}.error{padding:18px;border-radius:14px;background:#fff4f5;color:#a62f40;border:1px solid #f2c8ce}.loading{color:var(--muted);padding:40px 0}
+    @media(max-width:820px){.cards{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.chart{gap:5px}.bar-wrap:nth-child(even) small{visibility:hidden}}
+    @media(max-width:540px){.shell{width:min(100% - 20px,1080px)}.topbar{border-radius:18px;align-items:flex-start}.nav{flex-wrap:wrap;justify-content:flex-end}.hero h1{font-size:3rem}.cards{gap:8px}.card{padding:15px}.card strong{font-size:1.35rem}.learner{grid-template-columns:1fr auto}.learner time{display:none}}
+  </style>
+<link rel="stylesheet" href="/reference-theme.css"><script src="/site-settings.js?v=cookie-compat-1" defer></script></head>
+<body>
+  <main class="shell">
+    <header class="topbar"><div class="brand"><span class="mark">P</span>Punstem</div><nav class="nav"><a href="/">Home</a><a href="/math.html">Math</a><a href="/trainer.html">Chemistry</a><a href="/learn.html">Learn</a><a href="/profile.html">Profile</a></nav></header>
+<section class="hero"><h1>Site totals</h1><p>Admin only. <a href="/admin.html">View individual accounts</a></p></section>
+    <div id="status" class="loading">Loading usage…</div>
+    <section id="content" hidden>
+      <div class="cards">
+        <article class="card"><small>Visits</small><strong id="visits">—</strong></article>
+        <article class="card"><small>Learners</small><strong id="learnersTotal">—</strong></article>
+        <article class="card"><small>Practice sprints</small><strong id="sessions">—</strong></article>
+        <article class="card"><small>Questions answered</small><strong id="questions">—</strong></article>
+        <article class="card"><small>Time on site</small><strong id="minutes">—</strong></article>
+        <article class="card"><small>Practice time</small><strong id="practiceMinutes">—</strong></article>
+        <article class="card"><small>First-try accuracy</small><strong id="accuracy">—</strong></article>
+        <article class="card"><small>Last activity</small><strong id="lastActivity">—</strong></article>
+      </div>
+      <div class="grid">
+        <div>
+          <article class="panel"><div class="panel-head"><h2>Daily use</h2><span>Visits over the last 30 active days</span></div><div class="chart" id="dailyChart"></div></article>
+          <article class="panel" id="leaderboard"><div class="panel-head"><h2>Leaderboard</h2><span>Accuracy first, then speed</span></div><div class="learners" id="recentLearners"></div></article>
+        </div>
+        <aside>
+          <article class="panel"><div class="panel-head"><h2>By subject</h2></div><div class="breakdown" id="pageBreakdown"></div></article>
+          <article class="panel"><div class="panel-head"><h2>Math sections</h2></div><div class="breakdown" id="sectionBreakdown"></div></article>
+          <article class="panel"><div class="panel-head"><h2>Difficulty</h2></div><div class="breakdown" id="difficultyBreakdown"></div></article>
+        </aside>
+      </div>
+<p class="privacy">Admin only. Totals include anonymous visits and saved practice.</p>
+    </section>
+  </main>
+  <script>
+    const $=s=>document.querySelector(s),fmt=n=>new Intl.NumberFormat().format(n||0),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+    function renderBreakdown(id,rows){const root=$(id),max=Math.max(1,...rows.map(x=>x.count));root.innerHTML=rows.length?rows.map(x=>`<div class="meter-row"><span>${esc(x.label)}</span><div class="meter"><i style="--w:${Math.round(x.count/max*100)}%"></i></div><b>${fmt(x.count)}</b></div>`).join(''):'<div class="empty">No data yet.</div>'}
+    function renderChart(days){const rows=[...days].reverse(),max=Math.max(1,...rows.map(x=>x.visits));$('#dailyChart').innerHTML=rows.length?rows.map(x=>{const date=new Date(`${x.day}T12:00:00`),label=date.toLocaleDateString(undefined,{month:'numeric',day:'numeric'}),tip=`${x.visits} visits · ${x.learners} learners · ${x.sessions} sprints`;return`<div class="bar-wrap"><div class="bar" style="--h:${Math.max(2,Math.round(x.visits/max*100))}%" data-tip="${tip}"></div><small>${label}</small></div>`}).join(''):'<div class="empty">Activity will appear here after the first visit.</div>'}
+    function renderLearners(rows){$('#recentLearners').innerHTML=rows.length?rows.map(x=>`<div class="learner"><strong>#${x.rank} · ${esc(x.name)}</strong><span>${x.accuracy}% accuracy · ${x.averageSeconds}s average</span><time>${x.sessions} session${x.sessions===1?'':'s'}</time></div>`).join(''):'<div class="empty">Complete a signed-in-by-name math sprint to join.</div>'}
+    async function load(){try{const response=await fetch('/api/analytics',{cache:'no-store'}),data=await response.json();if(!response.ok)throw new Error(data.error||'Could not load usage');const t=data.totals;$('#visits').textContent=fmt(t.visits);$('#learnersTotal').textContent=fmt(t.learners);$('#sessions').textContent=fmt(t.sessions);$('#questions').textContent=fmt(t.questions);$('#minutes').textContent=`${fmt(t.minutes)} min`;$('#practiceMinutes').textContent=`${fmt(t.practiceMinutes)} min`;$('#accuracy').textContent=t.questions?`${t.accuracy}%`:'—';$('#lastActivity').textContent=data.days[0]?new Date(`${data.days[0].day}T12:00:00`).toLocaleDateString(undefined,{month:'short',day:'numeric'}):'—';renderChart(data.days);renderLearners(data.leaderboard||[]);renderBreakdown('#pageBreakdown',data.pages);renderBreakdown('#sectionBreakdown',data.sections);renderBreakdown('#difficultyBreakdown',data.difficulties);$('#status').hidden=true;$('#content').hidden=false}catch(error){$('#status').className='error';$('#status').textContent=error.message}}
+    load();
+  </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';import ts from 'typescript';import {webcrypto} from 'node:crypto';
+const rows=[];const DB={prepare(sql){let args;return{bind(...v){args=v;return this;},async run(){const [id,user_id,kind,page,details,created_at]=args;rows.push({id,user_id,kind,page,details,created_at});},async all(){return{results:rows.filter(r=>r.user_id===args[0]&&r.kind==='practice_note').reverse()}}}}};const exports={};
+const c=vm.createContext({exports,Response,Request,URL,crypto:webcrypto,console,require:n=>n==='cloudflare:workers'?{env:{DB}}:{localUser:async r=>r.headers.get('x-test-user')?{userId:r.headers.get('x-test-user')}:null}});
+vm.runInContext(ts.transpileModule(fs.readFileSync('app/api/notebook/route.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,c);
+const req=(user,body,origin)=>new Request('https://example.test/api/notebook',{method:body?'POST':'GET',headers:{...(user?{'x-test-user':user}:{}),...(origin?{origin}:{}),'content-type':'application/json'},...(body?{body:JSON.stringify(body)}:{})});
+const note={id:'saved-note-123',type:'redo',subject:'math',questionId:'pw35',reason:'I used a closed endpoint instead of an open one.',snapshot:{equation:'piecewise',method:'<script>bad</script>',table:['forbidden'],userId:'bob'},userId:'bob'};
+assert.equal((await exports.GET(req(null))).status,401);assert.equal((await exports.POST(req(null,note))).status,401);assert.equal((await exports.POST(req('alice',note,'https://evil.test'))).status,403);
+assert.equal((await exports.POST(req('alice',note))).status,200);
+let saved=await(await exports.GET(req('alice'))).json();assert.equal(saved.notes[0].reason,note.reason);assert(!saved.notes[0].snapshot.table);assert(!saved.notes[0].userId);assert(!saved.notes[0].snapshot.userId);assert.equal((await(await exports.GET(req('bob'))).json()).notes.length,0);
+assert.equal((await exports.POST(req('alice',{...note,reason:'New reason'}))).status,200);saved=await(await exports.GET(req('alice'))).json();assert.equal(saved.notes.length,1);assert.equal(saved.notes[0].reason,'New reason');
+assert.equal((await exports.POST(req('bob',{...note,archived:true}))).status,200);assert.equal((await(await exports.GET(req('alice'))).json()).notes.length,1);
+assert.equal((await exports.POST(req('alice',{...note,archived:true}))).status,200);assert.equal((await(await exports.GET(req('alice'))).json()).notes.length,0);
+assert.equal((await exports.POST(req('alice',{id:'my-reminder-1',type:'reminder',subject:'both',text:'Convert entropy to kJ.'}))).status,200);
+assert.equal((await exports.POST(req('alice',{id:'bad',type:'redo',subject:'math'}))).status,400);
+console.log('Notebook API checks passed: authenticated account-only records, CSRF protection, edit/archive, reminders, and snapshot allowlist.');

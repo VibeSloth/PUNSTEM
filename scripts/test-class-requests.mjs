@@ -1,0 +1,20 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';import ts from 'typescript';import {webcrypto} from 'node:crypto';
+const rows=[],objects=new Map();let fail=false;
+const DB={prepare(sql){let args=[];return{bind(...v){args=v;return this},async first(){if(sql.includes('COUNT'))return{count:rows.filter(r=>r.user===args[0]).length};return rows.find(r=>r.id===args[0]);},async run(){if(fail)throw Error('db unavailable');rows.push({id:args[0],user:args[1],details:args[4],created_at:args[5],email:'alice@example.test',display_name:'Alice'});},async all(){return{results:rows}}}}};
+const BUCKET={async put(k,v){objects.set(k,v)},async get(k){return objects.has(k)?{body:objects.get(k)}:null},async delete(k){objects.delete(k)}};
+const exports={},context=vm.createContext({exports,Response,Request,URL,TextDecoder,crypto:webcrypto,console,require:n=>n==='cloudflare:workers'?{env:{DB,BUCKET}}:{localUser:async r=>r.headers.get('x-test-user')?{userId:r.headers.get('x-test-user')}:null,isAdmin:u=>u.userId==='admin'}});
+vm.runInContext(ts.transpileModule(fs.readFileSync('app/api/class-requests/route.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,context);
+function req(user,content='%PDF-1.7\nfixture',origin){const body=new FormData();body.set('className','AP Biology');body.set('priority','Recognize cell processes');body.set('textbook',new Blob([content],{type:'application/pdf'}),'notes.pdf');return new Request('https://example.test/api/class-requests',{method:'POST',headers:{...(user?{'x-test-user':user}:{}),...(origin?{origin}:{})},body});}
+const get=(user,q='')=>new Request('https://example.test/api/class-requests'+q,{headers:user?{'x-test-user':user}:{}});
+assert.equal((await exports.POST(req(null))).status,401);
+assert.equal((await exports.POST(req('alice',undefined,'https://evil.test'))).status,403);
+assert.equal((await exports.POST(req('alice','not a PDF'))).status,400);assert.equal(objects.size,0);
+assert.equal((await exports.POST(req('alice'))).status,200);assert.equal(objects.size,1);
+assert.equal((await exports.GET(get(null))).status,401);assert.equal((await exports.GET(get('alice'))).status,403);
+const list=await(await exports.GET(get('admin'))).json();assert.equal(list.requests[0].className,'AP Biology');assert.equal(list.requests[0].priority,'Recognize cell processes');assert(!JSON.stringify(list).includes('class-requests/'));
+const file=list.requests[0].files[0],query='?request='+rows[0].id+'&file='+file.id;
+assert.equal((await exports.GET(get('alice',query))).status,403);const download=await exports.GET(get('admin',query));assert.equal(download.status,200);assert.equal(download.headers.get('content-type'),'application/pdf');assert((await download.text()).startsWith('%PDF-'));assert.equal((await exports.GET(get('admin','?request=missing&file=missing'))).status,404);
+fail=true;assert.equal((await exports.POST(req('bob'))).status,503);assert.equal(objects.size,1);fail=false;
+for(let i=0;i<4;i++)assert.equal((await exports.POST(req('alice'))).status,200);
+assert.equal((await exports.POST(req('alice'))).status,429);
+console.log('Class requests passed: PDF validation, private files, admin-only lists/downloads, CSRF/auth, limits, and orphan cleanup.');

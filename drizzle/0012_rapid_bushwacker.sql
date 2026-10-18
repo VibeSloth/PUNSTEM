@@ -1,0 +1,1 @@
+ALTER TABLE `site_feedback` ADD `context` text DEFAULT '{}' NOT NULL;

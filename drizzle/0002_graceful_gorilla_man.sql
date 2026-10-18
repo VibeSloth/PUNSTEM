@@ -1,0 +1,1 @@
+CREATE INDEX `idx_function_sprint_device_day` ON `function_sprint_sessions` (`device_id`,`completed_on`);

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Punstem — Learn</title>
+<style>
+:root{--ink:#17243a;--muted:#68758a;--line:#e1e7ef;--blue:#246bfd}*{box-sizing:border-box}body{margin:0;background:#f8fafc;color:var(--ink);font:16px/1.55 Arial,Helvetica,sans-serif}.shell{width:min(980px,calc(100% - 28px));margin:auto;padding:18px 0 54px}.top{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:#fff;border:1px solid var(--line);border-radius:16px}.brand{font-weight:900}.nav{display:flex;gap:6px;flex-wrap:wrap}.nav a{padding:8px 10px;border-radius:9px;color:#354761;text-decoration:none;font-weight:700;font-size:.85rem}.nav a.active{background:#eef4ff;color:#174ea6}h1{font-size:clamp(2.2rem,6vw,4rem);letter-spacing:-.05em;line-height:1;margin:52px 0 12px}.lede{color:var(--muted);margin:0 0 28px}.tabs{display:flex;gap:8px;margin-bottom:18px}.tabs button{border:1px solid var(--line);background:#fff;padding:10px 15px;border-radius:10px;font-weight:800;cursor:pointer}.tabs button.active{background:#17243a;color:#fff}.panel{display:none}.panel.active{display:grid;grid-template-columns:1fr 1fr;gap:12px}.lesson{background:#fff;border:1px solid var(--line);border-radius:15px;padding:20px}.lesson h2{font-size:1.05rem;margin:0 0 8px}.lesson p{color:var(--muted);margin:0}.lesson code{display:block;margin-top:12px;background:#f3f6fa;border-radius:9px;padding:10px;color:#183e78;white-space:pre-line;font:700 .9rem/1.5 ui-monospace,monospace}.go{display:inline-block;margin-top:14px;color:var(--blue);font-weight:800;text-decoration:none}@media(max-width:650px){.panel.active{grid-template-columns:1fr}.top{align-items:flex-start}.nav{justify-content:flex-end}}
+</style><link rel="stylesheet" href="/reference-theme.css"><script src="/site-settings.js?v=cookie-compat-1" defer></script></head><body><main class="shell">
+<header class="top"><div class="brand">Punstem</div><nav class="nav"><a href="/">Home</a><a href="/math.html">Math</a><a href="/trainer.html">Chemistry</a><a href="/profile.html">Profile</a></nav></header>
+<h1>Learn the idea first.</h1><p class="lede">Choose a subject. Each note is short enough to read before a sprint.</p>
+<div class="tabs"><button class="active" data-tab="math">Math</button><button data-tab="chem">Chemistry</button></div>
+<section class="panel active" id="math">
+<article class="lesson"><h2>Evaluate a function</h2><p>Replace every x with the given input. Do not add terms that are not in the function.</p><code>f(x)=2x²−5<br>f(2)=2(2)²−5=3</code></article>
+<article class="lesson"><h2>Piecewise functions</h2><p>First find which condition contains the input. Then use only that rule.</p><code>f(x)={ x+1, x&lt;2<br>       3x,  x≥2 }</code></article>
+<article class="lesson"><h2>FRST transformations</h2><p>Work in order: Factor, Reflect, Stretch, then Transform by shifting.</p><code>Factor → Reflect → Stretch → Shift</code></article>
+<article class="lesson"><h2>Composition</h2><p>Work from the inside out. Find the inside output, then use it as the next input.</p><code>(f∘g)(2)=f(g(2))</code></article>
+<a class="go" href="/math.html">Practice math</a></section>
+<section class="panel" id="chem">
+<article class="lesson"><h2>Specific heat</h2><p>Use mass, specific heat, and temperature change. Track the sign if the substance loses heat.</p><code>q=mcΔT</code></article>
+<article class="lesson"><h2>Hess’s law</h2><p>Reverse, multiply, and add equations until unwanted substances cancel. Do the same to ΔH.</p><code>reverse reaction → reverse sign of ΔH</code></article>
+<article class="lesson"><h2>Formation enthalpy</h2><p>Multiply each formation value by its coefficient. Products minus reactants.</p><code>ΔH°rxn=ΣnΔHf°(products)−ΣnΔHf°(reactants)</code></article>
+<article class="lesson"><h2>Gibbs free energy</h2><p>Convert entropy to matching units before multiplying by temperature.</p><code>ΔG=ΔH−TΔS</code></article>
+<a class="go" href="/trainer.html">Practice chemistry</a></section>
+</main><script>document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab))})</script></body></html>

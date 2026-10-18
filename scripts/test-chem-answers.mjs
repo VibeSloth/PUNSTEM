@@ -1,0 +1,20 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const context=vm.createContext({window:{},console});
+vm.runInContext(fs.readFileSync('public/chem-answers.js','utf8'),context);
+const {matches,parse,diagnose}=context.window.PunstemChemAnswers;
+const answer=value=>({type:'number',value,tol:.015});
+for(const [input,key] of [['1.16',122*4.18*11/(101*48)],['1.2',1.157],['-56',-56.4635],['1.2e-4',.0001157],['1/2',.5],['500 K',500]])assert(matches(input,answer(key)),input);
+for(const [input,key] of [['1',1.157],['.001',1.157],['0.01',.0001157],['56',-56.4635],['banana',1]])assert(!matches(input,answer(key)),input);
+assert.equal(parse('-1.2e3 kJ/mol'),-1200);
+const q={answer:answer(30-298.15*.290),thermo:{deltaH:30,deltaS:290,temperatureK:298.15,temperatureC:25,mode:'gibbs'}};
+assert.equal(diagnose(q,'-86433.5').code,'gibbs-entropy-units');
+assert.equal(diagnose(q,'22.75').code,'temperature-kelvin');
+assert.equal(diagnose(q,'116.4635').code,'gibbs-operation');
+assert.equal(diagnose(q,'-56'),null);
+assert.equal(diagnose(q,'1234'),null);
+assert.equal(diagnose({answer:answer(500),thermo:{deltaH:-25,deltaS:-50,mode:'equilibrium'}},'.5').code,'gibbs-entropy-units');
+// Verify the known unit pattern wins over a generic sign guess.
+assert.equal(diagnose({answer:answer(-264+298*.278),thermo:{deltaH:-264,deltaS:-278,temperatureK:298,mode:'gibbs'}},'82580').code,'gibbs-entropy-units');
+console.log('Chemistry checks passed: rounding, tiny values, fractions, scientific notation, Gibbs units, signs, Kelvin, and subtraction.');
