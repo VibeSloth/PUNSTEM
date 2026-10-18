@@ -7,11 +7,11 @@ const page = fs.readFileSync(new URL('app/page.tsx', root), 'utf8');
 const account = fs.readFileSync(new URL('public/account.html', root), 'utf8');
 const settings = fs.readFileSync(new URL('public/site-settings.js', root), 'utf8');
 
-assert.match(page, /redirect\(["']\/account\.html["']\)/, 'homepage must enter through the top-level account page');
-assert.match(account, /data-auth-page/, 'account page must activate full-page auth mode');
-assert.match(account, /id="accountForm"/, 'account page must provide the shared auth-form mount');
-assert.match(settings, /appendChild\(auth\)/, 'shared auth form must mount on the account page');
-assert.match(settings, /window\.top\.location\.replace\('\/home\.html'\)/, 'successful account-page auth must return to classes');
+assert.match(page, /redirect\(["']\/sign-in["']\)/, 'homepage must enter through the React sign-in route');
+assert.match(account, /url=\/sign-in/, 'legacy account URL must redirect to the new sign-in route');
+assert.match(account, /window\.top\.location\.replace\('\/sign-in'\)/, 'legacy account fallback must navigate outside an embed');
+assert.match(settings, /appendChild\(auth\)/, 'existing page account form remains mounted by shared auth code');
+assert.match(settings, /window\.top\.location\.replace\('\/home\.html'\)/, 'successful legacy auth must return to classes');
 assert.match(settings, /credentials:'same-origin'/, 'login requests must preserve same-origin cookie credentials');
 assert.doesNotMatch(settings, /localStorage\.(?:setItem|getItem)\([^)]*(?:session|token)/i, 'session credentials must not be stored in local storage');
 

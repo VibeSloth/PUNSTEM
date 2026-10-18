@@ -1,0 +1,37 @@
+.punstem-signin {
+  --primary: #7650c8;
+  --primary-foreground: #fff;
+  --background: #fcfbff;
+  --foreground: #262333;
+  --muted-foreground: #706a80;
+  --border: #ded9e8;
+  --destructive: #ba334c;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.punstem-signin .animate-element { opacity: 0; filter: blur(10px); transform: translateY(16px); animation: fadeSlideIn .6s ease-out forwards; }
+.punstem-signin .animate-slide-right { opacity: 0; filter: blur(10px); transform: translateX(20px); animation: slideRightIn .8s ease-out forwards; }
+.punstem-signin .animate-testimonial { opacity: 0; filter: blur(10px); transform: translateY(20px) scale(.96); animation: testimonialIn .7s ease-out forwards; }
+.punstem-signin .animate-delay-100 { animation-delay: .1s; }
+.punstem-signin .animate-delay-200 { animation-delay: .2s; }
+.punstem-signin .animate-delay-300 { animation-delay: .3s; }
+.punstem-signin .animate-delay-400 { animation-delay: .4s; }
+.punstem-signin .animate-delay-500 { animation-delay: .5s; }
+.punstem-signin .animate-delay-600 { animation-delay: .6s; }
+.punstem-signin .animate-delay-700 { animation-delay: .7s; }
+.punstem-signin .animate-delay-800 { animation-delay: .8s; }
+.punstem-signin .animate-delay-900 { animation-delay: .9s; }
+.punstem-signin .animate-delay-1000 { animation-delay: 1s; }
+.punstem-signin .animate-delay-1200 { animation-delay: 1.2s; }
+.punstem-signin .animate-delay-1400 { animation-delay: 1.4s; }
+@keyframes fadeSlideIn { to { opacity: 1; filter: blur(0); transform: translateY(0); } }
+@keyframes slideRightIn { to { opacity: 1; filter: blur(0); transform: translateX(0); } }
+@keyframes testimonialIn { to { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); } }
+@media (prefers-color-scheme: dark) {
+  .punstem-signin { --background: #17141e; --foreground: #f3effa; --muted-foreground: #b3aabb; --border: #40394d; --primary: #b99bea; --primary-foreground: #251439; --destructive: #ff97a9; }
+}
+html[data-theme="light"] .punstem-signin { --background: #fcfbff; --foreground: #262333; --muted-foreground: #706a80; --border: #ded9e8; --primary: #7650c8; --primary-foreground: #fff; --destructive: #ba334c; }
+html[data-theme="dark"] .punstem-signin { --background: #17141e; --foreground: #f3effa; --muted-foreground: #b3aabb; --border: #40394d; --primary: #b99bea; --primary-foreground: #251439; --destructive: #ff97a9; }
+@media (prefers-reduced-motion: reduce) {
+  .punstem-signin .animate-element, .punstem-signin .animate-slide-right, .punstem-signin .animate-testimonial { animation: none; opacity: 1; filter: none; transform: none; }
+  .punstem-signin *, .punstem-signin *::before, .punstem-signin *::after { transition: none; }
+}
