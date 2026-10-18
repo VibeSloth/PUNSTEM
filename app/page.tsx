@@ -1,11 +1,6 @@
+import { redirect } from "next/navigation";
+
 export default function Home() {
-  return (
-    <main className="fixed inset-0 bg-white">
-      <iframe
-        className="h-full w-full border-0"
-        src="/home.html"
-        title="Punstem home"
-      />
-    </main>
-  );
+  // Use a top-level page so sign-in cookies are not established in an iframe.
+  redirect("/account.html");
 }
