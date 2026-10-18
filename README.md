@@ -28,7 +28,9 @@ npm run dev -- --port 5178
 
 Open the loopback URL printed by the development server. The new study hub
 is `/study.html`; existing practice is `/math.html`, `/trainer.html`, and
-`/super-speed.html`. The root page embeds `/home.html`.
+`/super-speed.html`. The root page starts at `/sign-in`; existing sessions
+continue to `/home.html`. See [sign-in integration](docs/sign-in-integration.md)
+for the React component, Tailwind/shadcn paths, and session behavior.
 
 ```sh
 node scripts/test-study.mjs
